@@ -316,6 +316,21 @@ const options: swaggerJsdoc.Options = {
             },
           },
         },
+        // Upload schemas
+        FileUpload: {
+          type: 'object',
+          properties: {
+            id: { type: 'string', format: 'uuid' },
+            fileType: { type: 'string', enum: ['image', 'model', 'mesh'] },
+            originalName: { type: 'string' },
+            storedName: { type: 'string' },
+            fileUrl: { type: 'string' },
+            mimeType: { type: 'string' },
+            fileSize: { type: 'string' }, // BigInt returned as string json
+            status: { type: 'string', enum: ['pending', 'completed', 'failed'] },
+            createdAt: { type: 'string', format: 'date-time' },
+          },
+        },
       },
     },
     tags: [
@@ -326,6 +341,7 @@ const options: swaggerJsdoc.Options = {
       { name: 'Triggers', description: '트리거 존 관리 API' },
       { name: 'QR', description: 'QR 코드 API' },
       { name: 'Visits', description: '방문 기록 API' },
+      { name: 'Upload', description: '파일 업로드 및 관리 API' },
     ],
   },
   apis: ['./src/routes/*.ts'],
