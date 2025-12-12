@@ -71,6 +71,36 @@ export class FileController {
     }
 
     /**
+     * Upload an AR mesh
+     */
+    async uploadMesh(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
+            const multerReq = req as MulterRequest;
+            if (!multerReq.file) {
+                throw new AppError(ErrorCode.VALIDATION_ERROR, 'No file uploaded', 400);
+            }
+
+            if (!req.adminId) {
+                throw AppError.unauthorized();
+            }
+
+            const result = await fileService.uploadFile(
+                req.adminId,
+                multerReq.file,
+                FileType.mesh
+            );
+
+            const serialized = JSON.parse(JSON.stringify(result, (_, v) =>
+                typeof v === 'bigint' ? v.toString() : v
+            ));
+
+            res.status(201).json(serialized);
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    /**
      * List uploaded files
      */
     async listFiles(req: Request, res: Response, next: NextFunction): Promise<void> {

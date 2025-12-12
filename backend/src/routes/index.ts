@@ -7,6 +7,8 @@ import triggerRoutes from './trigger.routes';
 import qrRoutes from './qr.routes';
 import visitRoutes, { spaceVisitRouter } from './visit.routes';
 import fileRoutes from './file.routes';
+import mlRoutes from './ml.routes';
+import translateRoutes from './translate.routes';
 
 const router = Router();
 
@@ -48,5 +50,7 @@ router.use('/qr', qrRoutes); // QR routes include /qr/:code, /qr/:code/scan
 router.use('/visits', visitRoutes); // Visit routes include /visits, /visits/:id, /visits/:id/end, /visits/:id/events
 router.use('/spaces/:spaceId/visits', spaceVisitRouter); // Space visit routes include /spaces/:spaceId/visits, /spaces/:spaceId/stats
 router.use('/upload', fileRoutes);
+router.use('/ml', mlRoutes);
+router.use('/translate', translateRoutes);
 
 export default router;

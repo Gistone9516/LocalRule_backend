@@ -88,6 +88,41 @@ router.post('/model', uploadModel.single('file'), fileController.uploadModel);
 
 /**
  * @swagger
+ * /upload/mesh:
+ *   post:
+ *     summary: AR 메쉬 파일 업로드
+ *     tags: [Upload]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               file:
+ *                 type: string
+ *                 format: binary
+ *     responses:
+ *       201:
+ *         description: 업로드 성공
+ *         content:
+ *           application/json:
+ *             schema:
+ *               allOf:
+ *                 - $ref: '#/components/schemas/SuccessResponse'
+ *                 - type: object
+ *                   properties:
+ *                     data:
+ *                       $ref: '#/components/schemas/FileUpload'
+ *       400:
+ *         description: 잘못된 요청 (파일 형식, 크기 등)
+ */
+router.post('/mesh', uploadModel.single('file'), fileController.uploadMesh.bind(fileController));
+
+/**
+ * @swagger
  * /upload:
  *   get:
  *     summary: 업로드된 파일 목록 조회
